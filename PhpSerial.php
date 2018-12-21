@@ -9,12 +9,6 @@ define ("SERIAL_DEVICE_OPENED", 2);
  * THIS PROGRAM COMES WITH ABSOLUTELY NO WARRANTIES !
  * USE IT AT YOUR OWN RISKS !
  *
- * @author Rémy Sanchez <remy.sanchez@hyperthese.net>
- * @author Rizwan Kassim <rizwank@geekymedia.com>
- * @thanks Aurélien Derouineau for finding how to open serial ports with windows
- * @thanks Alec Avedisyan for help and testing with reading
- * @thanks Jim Wright for OSX cleanup/fixes.
- * @copyright under GPL 2 licence
  *
  * MGC 2018-07-19 Modifications for single-byte receive with no wait, to suit applications that need immediate return with 1 or zero bytes of data
  */
