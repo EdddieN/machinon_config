@@ -116,14 +116,14 @@
 </head>
 <body>
 	<div class="top-menu">
-		<a href="index.php">AIN</a>
+		<a href="main.php">AIN</a>
 		<a href="ct.php">CT</a>
 		<a href="din.php">DIN</a>
 		<a href="dout.php">DOUT</a>
 		<a class="active-purple" href="internal.php">General</a>
 	</div>
 	<hr>
-	<form method="POST" class="form-inline">
+	<form method="POST" class="form-inline" action="?internal">
 		<table class="adc-setup-table">
 			<thead>
 				<tr>

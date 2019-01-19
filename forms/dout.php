@@ -79,14 +79,14 @@
 </head>
 <body>
 	<div class="top-menu">
-		<a href="index.php">AIN</a>
+		<a href="main.php">AIN</a>
 		<a href="ct.php">CT</a>
 		<a href="din.php">DIN</a>
 		<a class="active-red" href="dout.php">DOUT</a>
 		<a href="internal.php">General</a>
 	</div>
 	<hr>
-	<form method="POST" class="form-inline">
+	<form method="POST" class="form-inline" action="?=dout">
 		<table class="adc-setup-table">
 			<thead>
 				<tr>
@@ -110,7 +110,9 @@
 						<td>
 							<select name="state-<?php echo $i; ?>">
 								<?php foreach ($stateOptions as $value => $option): ?>
-									<option value="<?php echo $value; ?>" <?php echo isset($channelsData[$i]["state"]) && $channelsData[$i]["state"] == $value ? "selected" : ""; ?>><?php echo $option; ?></option>
+									<option value="<?php echo $value; ?>"
+                                        <?php echo isset($channelsData[$i]["state"]) && $channelsData[$i]["state"] == $value
+                                            ? "selected" : ""; ?>><?php echo $option; ?></option>
 								<?php endforeach; ?>
 							</select>
 						</td>

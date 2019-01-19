@@ -124,14 +124,14 @@
 </head>
 <body>
 	<div class="top-menu">
-		<a href="index.php">AIN</a>
+		<a href="main.php">AIN</a>
 		<a href="ct.php">CT</a>
 		<a class="active-yellow" href="din.php">DIN</a>
 		<a href="dout.php">DOUT</a>
 		<a href="internal.php">General</a>
 	</div>
 	<hr>
-	<form method="POST" class="form-inline">
+	<form method="POST" class="form-inline" action="?=din">
 		<table class="adc-setup-table">
 			<thead>
 				<tr>
@@ -159,23 +159,32 @@
 						<td>
 							<select name="mode-<?php echo $i; ?>">
 								<?php foreach ($modeOptions as $value => $option): ?>
-									<option value="<?php echo $value; ?>" <?php echo isset($channelsData[$i]["mode"]) && $channelsData[$i]["mode"] == $value ? "selected" : ""; ?>><?php echo $option; ?></option>
+									<option value="<?php echo $value; ?>"
+                                        <?php echo isset($channelsData[$i]["mode"]) && $channelsData[$i]["mode"] == $value
+                                            ? "selected" : ""; ?>><?php echo $option; ?></option>
 								<?php endforeach; ?>
 							</select>
 						</td>
 						<td>
-							<input type="checkbox" name="invert-<?php echo $i ?>" value="1" <?php echo $channelsData[$i]["invert"] == 1 ? "checked" : ""; ?>/>
+							<input type="checkbox" name="invert-<?php echo $i ?>"
+                                   value="1" <?php echo $channelsData[$i]["invert"] == 1 ? "checked" : ""; ?>/>
 						</td>
 						<td>
-							<input type="text" name="multiplier-<?php echo $i; ?>[]" value="<?php echo isset($channelsData[$i]["multiplier"][0]) ? $channelsData[$i]["multiplier"][0] : ""; ?>"/>
+							<input type="text" name="multiplier-<?php echo $i; ?>[]"
+                                   value="<?php echo isset($channelsData[$i]["multiplier"][0])
+                                       ? $channelsData[$i]["multiplier"][0] : ""; ?>"/>
 						</td>
 						<td>
-							<input type="text" name="multiplier-<?php echo $i; ?>[]" value="<?php echo isset($channelsData[$i]["multiplier"][1]) ? $channelsData[$i]["multiplier"][1] : ""; ?>"/>
+							<input type="text" name="multiplier-<?php echo $i; ?>[]"
+                                   value="<?php echo isset($channelsData[$i]["multiplier"][1])
+                                       ? $channelsData[$i]["multiplier"][1] : ""; ?>"/>
 						</td>
 						<td>
 							<select name="sensor-<?php echo $i; ?>">
 								<?php foreach ($sensorOptions as $value => $option): ?>
-									<option value="<?php echo $value; ?>" <?php echo isset($channelsData[$i]["sensor"]) && $channelsData[$i]["sensor"] == $value ? "selected" : ""; ?>><?php echo $option; ?></option>
+									<option value="<?php echo $value; ?>"
+                                        <?php echo isset($channelsData[$i]["sensor"]) && $channelsData[$i]["sensor"] == $value
+                                            ? "selected" : ""; ?>><?php echo $option; ?></option>
 								<?php endforeach; ?>
 							</select>
 						</td>
