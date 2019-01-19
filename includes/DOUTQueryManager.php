@@ -1,11 +1,12 @@
 <?php
 
-require_once("QueryManager.php");
+require_once __DIR__ . '/QueryManager.php';
 
 class DOUTQueryManager implements QueryManager {
 
     private static $configList = [
         "state" => 24,
+        "periodic-status-report" => 26,
     ];
 
     /**
@@ -18,7 +19,8 @@ class DOUTQueryManager implements QueryManager {
         $queries = [];
         foreach ($data as $type => $value) {
             if (isset(static::$configList[$type])) {
-                $queries[] = "{$nodeId};{$channelId};" . self::QUERY_TYPE_WRITE . ";" . self::QUERY_USE_ACK . ";" . static::$configList[$type] . ";{$value}";
+                $queries[] = "{$nodeId};{$channelId};" . self::QUERY_TYPE_WRITE . ";"
+                    . self::QUERY_USE_ACK . ";" . static::$configList[$type] . ";{$value}";
             }
         }
         return $queries;

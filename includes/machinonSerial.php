@@ -1,7 +1,7 @@
 <?php
 require_once __DIR__ . '/PhpSerial.php';
 
-const MACHINON_SERIAL_PORT = '/dev/serial1';
+const MACHINON_SERIAL_PORT = '/dev/ttyAMA0';
 //const MACHINON_SERIAL_PORT = '/dev/ttySC1';
 
 function microtime_float()
@@ -33,7 +33,7 @@ class MachinonSerial
 		//$this->_serial->deviceOpen($mode='r+', $raw=true, $echo=false);
 		$this->_serial->deviceOpen($mode='r+b');
 		// may need to set "raw" mode and/or disable echo for stty?
-		$this->sendString("\n",0);  // send an empty line to flush the machinon serial parser
+		$this->sendString("\n");  // send an empty line to flush the machinon serial parser
 	}
 
 
@@ -91,9 +91,10 @@ class MachinonSerial
 				// DINxx_status
 				// type 24 = status report enable
 				// type 25 = status input invert
+				// type 26 = status input periodic-status-report
 				for ($child = 1; $child <= 16; $child++)
 				{
-					foreach ([24, 25] as $msgType)
+					foreach ([24, 25, 26] as $msgType)
 					{
 						$this->sendString("$node;$child;2;0;$msgType;0\n");
 						// TODO break out if a response failed?
@@ -159,9 +160,10 @@ class MachinonSerial
 			case 5:
 				// DOUTxx
 				// type 24 = enable DOUT ON at startup
+				// type 26 = enable DOUT periodic-status-report at startup
 				for ($child = 1; $child <= 16; $child++)
 				{
-					foreach ([24,] as $msgType)
+					foreach ([24,26] as $msgType)
 					{
 						$this->sendString("$node;$child;2;0;$msgType;0\n");
 						// TODO break out if a response failed?
@@ -206,8 +208,7 @@ class MachinonSerial
 		{
 			// send the pre-coded string. Wait for the response but ignore it
 			$this->sendString($message . "\n");
-			$dummy = $this->readString();
+//			$dummy = $this->readString();
 		}
 	}
 }
-?>

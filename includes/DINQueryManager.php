@@ -1,6 +1,6 @@
 <?php
 
-require_once("QueryManager.php");
+require_once __DIR__ . '/QueryManager.php';
 
 class DINQueryManager implements QueryManager {
 
@@ -13,6 +13,7 @@ class DINQueryManager implements QueryManager {
         "multiplier" => 25,
         "sensor" => 26,
 		"invert" => 25,
+        "periodic-status-report" => 26,
     ];
 
     /**
@@ -48,6 +49,9 @@ class DINQueryManager implements QueryManager {
                                 $queries[2][] = "2;{$channelId};" . self::QUERY_TYPE_WRITE . ";" . self::QUERY_USE_ACK . ";" . static::$configList[$type] . ";1";
                                 break;
                         }
+                        break;
+                    case "periodic-status-report":
+                        $queries[1][] = "1;{$channelId};" . self::QUERY_TYPE_WRITE . ";" . self::QUERY_USE_ACK . ";" . static::$configList[$type] . ";{$value}";
                         break;
                     default:
                         $queries[2][] = "2;{$channelId};" . self::QUERY_TYPE_WRITE . ";" . self::QUERY_USE_ACK . ";" . static::$configList[$type] . ";{$value}";

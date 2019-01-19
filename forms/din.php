@@ -1,6 +1,5 @@
 <?php
-	require_once("machinonSerial.php");
-	require_once("DINQueryManager.php");
+	require_once __DIR__ . '/../includes/DINQueryManager.php';
 
 	$modeOptions = [
 		DINQueryManager::MODE_DISABLE => "Disabled",
@@ -79,7 +78,8 @@
 					$nodeQueries = implode("\n", $nodeQueries) . "\n";
 					file_put_contents("node{$nodeID}.conf", $nodeQueries);
                     // execute bash script for each node
-                    shell_exec("./config-write.sh -w {$nodeID}");   // write config lines from "node{$nodeId}.conf" file to the device
+                    shell_exec("./config-write.sh -w {$nodeID}");
+					// write config lines from "node{$nodeId}.conf" file to the device
 					*/
 					// write the lines to serial port
 					$serialport->writeParams($nodeQueries);
@@ -94,7 +94,8 @@
     $queries = [];
     foreach ($nodes as $nodeId) {
         /*
-		shell_exec("./config-write.sh -r {$nodeID}");  // read back device config into "node{$nodeId}.read" file for populating into form
+		shell_exec("./config-write.sh -r {$nodeID}");
+        // read back device config into "node{$nodeId}.read" file for populating into form
         $readFilePath = "node{$nodeID}.read";
         if (file_exists($readFilePath)) {
             $fileContent = file_get_contents($readFilePath);
@@ -113,90 +114,81 @@
 		//echo "</pre>";
     }
 ?>
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="utf-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>machinon DIN Setup</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" type="text/css" media="screen" href="css/main.css" />
-</head>
-<body>
-	<div class="top-menu">
-		<a href="main.php">AIN</a>
-		<a href="ct.php">CT</a>
-		<a class="active-yellow" href="din.php">DIN</a>
-		<a href="dout.php">DOUT</a>
-		<a href="internal.php">General</a>
-	</div>
-	<hr>
-	<form method="POST" class="form-inline" action="?=din">
-		<table class="adc-setup-table">
-			<thead>
-				<tr>
-					<th>Input</th>
-					<th>Mode</th>
-					<th>Invert</th>
-					<th>Multiplier Slope</th>
-					<th>Multiplier Offset</th>
-					<th>Data Type</th>
-				</tr>
-			</thead>
-			<tbody>
-				<?php for ($i = 1; $i <= 16; $i++): ?>
-					<?php if (isset($errors[$i])): ?>
-						<tr>
-							<td colspan="5" class="errors">
-								<?php foreach ($errors[$i] as $configName => $error): ?>
-									<p class="error-box"><?php echo $configName . " - " . $error; ?></p>
-								<?php endforeach; ?>
-							</td>
-						</tr>
-					<?php endif; ?>
-					<tr>
-						<td>DIN<?php echo str_pad($i, 2, "0", STR_PAD_LEFT); ?></td>
-						<td>
-							<select name="mode-<?php echo $i; ?>">
-								<?php foreach ($modeOptions as $value => $option): ?>
-									<option value="<?php echo $value; ?>"
-                                        <?php echo isset($channelsData[$i]["mode"]) && $channelsData[$i]["mode"] == $value
-                                            ? "selected" : ""; ?>><?php echo $option; ?></option>
-								<?php endforeach; ?>
-							</select>
-						</td>
-						<td>
-							<input type="checkbox" name="invert-<?php echo $i ?>"
-                                   value="1" <?php echo $channelsData[$i]["invert"] == 1 ? "checked" : ""; ?>/>
-						</td>
-						<td>
-							<input type="text" name="multiplier-<?php echo $i; ?>[]"
-                                   value="<?php echo isset($channelsData[$i]["multiplier"][0])
-                                       ? $channelsData[$i]["multiplier"][0] : ""; ?>"/>
-						</td>
-						<td>
-							<input type="text" name="multiplier-<?php echo $i; ?>[]"
-                                   value="<?php echo isset($channelsData[$i]["multiplier"][1])
-                                       ? $channelsData[$i]["multiplier"][1] : ""; ?>"/>
-						</td>
-						<td>
-							<select name="sensor-<?php echo $i; ?>">
-								<?php foreach ($sensorOptions as $value => $option): ?>
-									<option value="<?php echo $value; ?>"
-                                        <?php echo isset($channelsData[$i]["sensor"]) && $channelsData[$i]["sensor"] == $value
-                                            ? "selected" : ""; ?>><?php echo $option; ?></option>
-								<?php endforeach; ?>
-							</select>
-						</td>
-					</tr>
-				<?php endfor; ?>
-				<tr>
-					<td colspan="6">
-						<button type="submit" class="btn">SAVE</button>
-					</td>
-				</tr>
-			</tbody>
-		</table>
-	</form>
-</body>
-</html>
+
+<form method="POST" class="form-inline">
+    <input type="hidden" name="f" value="din"/>
+    <table class="adc-setup-table">
+        <thead>
+            <tr>
+                <th>Input</th>
+                <th>Mode</th>
+                <th>Invert</th>
+                <th>Periodic Report</th>
+                <th>Multiplier Slope</th>
+                <th>Multiplier Offset</th>
+                <th>Data Type</th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php for ($i = 1; $i <= 16; $i++): ?>
+                <?php if (isset($errors[$i])): ?>
+                    <tr>
+                        <td colspan="5" class="errors">
+                            <?php foreach ($errors[$i] as $configName => $error): ?>
+                                <p class="error-box"><?php echo $configName . " - " . $error; ?></p>
+                            <?php endforeach; ?>
+                        </td>
+                    </tr>
+                <?php endif; ?>
+                <tr>
+                    <td>DIN<?php echo str_pad($i, 2, "0", STR_PAD_LEFT); ?></td>
+                    <td>
+                        <select name="mode-<?php echo $i; ?>">
+                            <?php foreach ($modeOptions as $value => $option): ?>
+                                <option value="<?php echo $value; ?>"
+                                    <?php echo isset($channelsData[$i]["mode"]) && $channelsData[$i]["mode"] == $value
+                                        ? "selected" : ""; ?>><?php echo $option; ?></option>
+                            <?php endforeach; ?>
+                        </select>
+                    </td>
+                    <td>
+                        <input type="checkbox" name="invert-<?php echo $i ?>" value="1"
+                            <?php echo isset($channelsData[$i]["invert"]) && $channelsData[$i]["invert"] == 1
+                                ? "checked" : ""; ?>/>
+                    </td>
+                    <td>
+                        <input class="form-check-input position-static" type="checkbox"
+                               name="periodic-status-report-<?php echo $i; ?>" value="1"
+                            <?php echo isset($channelsData[$i]["periodic-status-report"]) &&
+                                $channelsData[$i]["periodic-status-report"] == 1
+                                    ? "checked" : ""; ?> />
+                    </td>
+                    <td>
+                        <input type="text" name="multiplier-<?php echo $i; ?>[]"
+                               value="<?php echo isset($channelsData[$i]["multiplier"][0])
+                                   ? $channelsData[$i]["multiplier"][0] : ""; ?>"/>
+                    </td>
+                    <td>
+                        <input type="text" name="multiplier-<?php echo $i; ?>[]"
+                               value="<?php echo isset($channelsData[$i]["multiplier"][1])
+                                   ? $channelsData[$i]["multiplier"][1] : ""; ?>"/>
+                    </td>
+                    <td>
+                        <select name="sensor-<?php echo $i; ?>">
+                            <?php foreach ($sensorOptions as $value => $option): ?>
+                                <option value="<?php echo $value; ?>"
+                                    <?php echo isset($channelsData[$i]["sensor"]) && $channelsData[$i]["sensor"] == $value
+                                        ? "selected" : ""; ?>><?php echo $option; ?></option>
+                            <?php endforeach; ?>
+                        </select>
+                    </td>
+                </tr>
+            <?php endfor; ?>
+            <tr>
+                <td colspan="6">
+                    <button type="submit" class="btn">SAVE</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</form>

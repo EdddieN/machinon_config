@@ -1,6 +1,5 @@
 <?php
-	require_once("machinonSerial.php");
-	require_once("ADCQueryManager.php");
+	require_once __DIR__ . '/../includes/ADCQueryManager.php';
 
 	$modeOptions = [
 		"0" => "0-10V",
@@ -91,91 +90,72 @@
 	}
 ?>
 
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="utf-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>machinon ADC Setup</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" type="text/css" media="screen" href="css/main.css" />
-</head>
-<body>
-	<div class="top-menu">
-		<a class="active-blue" href="?f=main">AIN</a>
-		<a href="?f=ct">CT</a>
-		<a href="?f=din">DIN</a>
-		<a href="?f=dout">DOUT</a>
-		<a href="?f=internal">General</a>
-	</div>
-	<hr>
-	<form method="POST" class="form-inline" action="?=main">
-		<table class="adc-setup-table">
-			<thead>
-				<tr>
-					<th>Input</th>
-					<th>Mode</th>
-					<th>Multiplier Slope</th>
-					<th>Multiplier Offset</th>
-					<th>Report Hysteresis<br>(0 to use interval)</th>
-					<th>Data Type</th>
-				</tr>
-			</thead>
-			<tbody>
-				<?php for ($i = 1; $i <= 8; $i++): ?>
-					<?php if (isset($errors[$i])): ?>
-						<tr>
-							<td colspan="5" class="errors">
-								<?php foreach ($errors[$i] as $configName => $error): ?>
-									<p class="error-box"><?php echo $configName . " - " . $error; ?></p>
-								<?php endforeach; ?>
-							</td>
-						</tr>
-					<?php endif; ?>
-					<tr>
-						<td>AIN<?php echo $i; ?></td>
-						<td>
-							<select name="mode-<?php echo $i; ?>">
-								<?php foreach ($modeOptions as $value => $option): ?>
-									<option value="<?php echo $value; ?>"
-                                        <?php echo isset($channelsData[$i]["mode"]) && $channelsData[$i]["mode"] == $value
-                                            ? "selected" : ""; ?>><?php echo $option; ?></option>
-								<?php endforeach; ?>
-							</select>
-						</td>
-						<td>
-							<input type="text" name="multiplier-<?php echo $i; ?>[]"
-                                   value="<?php echo isset($channelsData[$i]["multiplier"][0])
-                                       ? $channelsData[$i]["multiplier"][0] : ""; ?>"/>
-						</td>
-						<td>
-							<input type="text" name="multiplier-<?php echo $i; ?>[]"
-                                   value="<?php echo isset($channelsData[$i]["multiplier"][1])
-                                       ? $channelsData[$i]["multiplier"][1] : ""; ?>"/>
-						</td>
-						<td>
-							<input type="text" name="hysteresis-<?php echo $i; ?>"
-                                   value="<?php echo isset($channelsData[$i]["hysteresis"])
-                                       ? $channelsData[$i]["hysteresis"] : ""; ?>"/>
-						</td>
-						<td>
-							<select name="sensor-<?php echo $i; ?>">
-								<?php foreach ($sensorOptions as $value => $option): ?>
-									<option value="<?php echo $value; ?>"
-                                        <?php echo isset($channelsData[$i]["sensor"]) && $channelsData[$i]["sensor"] == $value
-                                            ? "selected" : ""; ?>><?php echo $option; ?></option>
-								<?php endforeach; ?>
-							</select>
-						</td>
-					</tr>
-				<?php endfor; ?>
-				<tr>
-					<td colspan="6">
-						<button type="submit" class="btn">SAVE</button>
-					</td>
-				</tr>
-			</tbody>
-		</table>
-	</form>
-</body>
-</html>
+<form method="POST" class="form-inline">
+    <input type="hidden" name="f" value="main"/>
+    <table class="adc-setup-table">
+        <thead>
+            <tr>
+                <th>Input</th>
+                <th>Mode</th>
+                <th>Multiplier Slope</th>
+                <th>Multiplier Offset</th>
+                <th>Report Hysteresis<br>(0 to use interval)</th>
+                <th>Data Type</th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php for ($i = 1; $i <= 8; $i++): ?>
+                <?php if (isset($errors[$i])): ?>
+                    <tr>
+                        <td colspan="5" class="errors">
+                            <?php foreach ($errors[$i] as $configName => $error): ?>
+                                <p class="error-box"><?php echo $configName . " - " . $error; ?></p>
+                            <?php endforeach; ?>
+                        </td>
+                    </tr>
+                <?php endif; ?>
+                <tr>
+                    <td>AIN<?php echo $i; ?></td>
+                    <td>
+                        <select name="mode-<?php echo $i; ?>">
+                            <?php foreach ($modeOptions as $value => $option): ?>
+                                <option value="<?php echo $value; ?>"
+                                    <?php echo isset($channelsData[$i]["mode"]) && $channelsData[$i]["mode"] == $value
+                                        ? "selected" : ""; ?>><?php echo $option; ?></option>
+                            <?php endforeach; ?>
+                        </select>
+                    </td>
+                    <td>
+                        <input type="text" name="multiplier-<?php echo $i; ?>[]"
+                               value="<?php echo isset($channelsData[$i]["multiplier"][0])
+                                   ? $channelsData[$i]["multiplier"][0] : ""; ?>"/>
+                    </td>
+                    <td>
+                        <input type="text" name="multiplier-<?php echo $i; ?>[]"
+                               value="<?php echo isset($channelsData[$i]["multiplier"][1])
+                                   ? $channelsData[$i]["multiplier"][1] : ""; ?>"/>
+                    </td>
+                    <td>
+                        <input type="text" name="hysteresis-<?php echo $i; ?>"
+                               value="<?php echo isset($channelsData[$i]["hysteresis"])
+                                   ? $channelsData[$i]["hysteresis"] : ""; ?>"/>
+                    </td>
+                    <td>
+                        <select name="sensor-<?php echo $i; ?>">
+                            <?php foreach ($sensorOptions as $value => $option): ?>
+                                <option value="<?php echo $value; ?>"
+                                    <?php echo isset($channelsData[$i]["sensor"]) && $channelsData[$i]["sensor"] == $value
+                                        ? "selected" : ""; ?>><?php echo $option; ?></option>
+                            <?php endforeach; ?>
+                        </select>
+                    </td>
+                </tr>
+            <?php endfor; ?>
+            <tr>
+                <td colspan="6">
+                    <button type="submit" class="btn">SAVE</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</form>
