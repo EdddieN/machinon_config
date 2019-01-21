@@ -8,7 +8,7 @@
     require_once __DIR__ . '/../includes/machinonSerial.php';
 
     $valid_forms = [
-        'main' => 'MAIN|machinon ADC Setup',
+        'main' => 'ADC|machinon ADC Setup',
         'ct' => 'CT|machinon CT Setup',
         'din' => 'DIN|machinon DIN Setup',
         'dout' => 'DOUT|machinon DOUT Setup',
