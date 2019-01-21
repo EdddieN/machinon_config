@@ -1,8 +1,7 @@
 <?php
 require_once __DIR__ . '/PhpSerial.php';
 
-const MACHINON_SERIAL_PORT = '/dev/ttyAMA0';
-//const MACHINON_SERIAL_PORT = '/dev/ttySC1';
+const MACHINON_SERIAL_PORT = '/dev/ttySC1';
 
 function microtime_float()
 {
