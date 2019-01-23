@@ -6,7 +6,7 @@ class DOUTQueryManager implements QueryManager {
 
     private static $configList = [
         "state" => 24,
-        "periodic-status-report" => 26,
+        "periodic_status_report" => 26,
     ];
 
     /**

@@ -91,7 +91,7 @@ class MachinonSerial
 				// DINxx_status
 				// type 24 = status report enable
 				// type 25 = status input invert
-				// type 26 = status input periodic-status-report
+				// type 26 = status input periodic_status_report
 				for ($child = 1; $child <= 16; $child++)
 				{
 					foreach ([24, 25, 26] as $msgType)
@@ -160,7 +160,7 @@ class MachinonSerial
 			case 5:
 				// DOUTxx
 				// type 24 = enable DOUT ON at startup
-				// type 26 = enable DOUT periodic-status-report at startup
+				// type 26 = enable DOUT periodic_status_report at startup
 				for ($child = 1; $child <= 16; $child++)
 				{
 					foreach ([24,26] as $msgType)

@@ -13,7 +13,7 @@ class DINQueryManager implements QueryManager {
         "multiplier" => 25,
         "sensor" => 26,
 		"invert" => 25,
-        "periodic-status-report" => 26,
+        "periodic_status_report" => 26,
     ];
 
     /**
@@ -50,7 +50,7 @@ class DINQueryManager implements QueryManager {
                                 break;
                         }
                         break;
-                    case "periodic-status-report":
+                    case "periodic_status_report":
                         $queries[1][] = "1;{$channelId};" . self::QUERY_TYPE_WRITE . ";" . self::QUERY_USE_ACK . ";" . static::$configList[$type] . ";{$value}";
                         break;
                     default:

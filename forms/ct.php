@@ -85,73 +85,75 @@
 
 ?>
 <form method="POST" class="form-inline">
-    <input type="hidden" name="f" value="ct"/>
-    <table class="adc-setup-table">
-        <thead>
-            <tr>
-                <th>Input</th>
-                <th>Multiplier</th>
-                <th>Report Hysteresis<br>(0 to use interval)</th>
-                <th>Data Type</th>
-            </tr>
-        </thead>
-        <tbody>
-            <?php for ($i = 1; $i <= 6; $i++): ?>
-                <?php if (isset($errors[$i])): ?>
+    <div class="container">
+        <div class="row justify-content-center">
+            <input type="hidden" name="f" value="ct"/>
+            <table class="adc-setup-table">
+                <thead>
                     <tr>
-                        <td colspan="3" class="errors">
-                            <?php foreach ($errors[$i] as $configName => $error): ?>
-                                <p class="error-box"><?php echo $error; ?></p>
-                            <?php endforeach; ?>
+                        <th>Input</th>
+                        <th>Multiplier</th>
+                        <th>Report Hysteresis<br>(0 to use interval)</th>
+                        <th>Data Type</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php for ($i = 1; $i <= 6; $i++): ?>
+                        <?php if (isset($errors[$i])): ?>
+                            <tr>
+                                <td colspan="3" class="errors">
+                                    <?php foreach ($errors[$i] as $configName => $error): ?>
+                                        <p class="error-box"><?php echo $error; ?></p>
+                                    <?php endforeach; ?>
+                                </td>
+                            </tr>
+                        <?php endif; ?>
+                        <tr>
+                            <td>CT<?php echo $i; ?></td>
+                            <td>
+                                <input type="text" name="multiplier-<?php echo $i; ?>"
+                                       value="<?php echo isset($channelsData[$i]["multiplier"])
+                                           ? $channelsData[$i]["multiplier"] : ""; ?>"/>
+                            </td>
+                            <td>
+                                <input type="text" name="hysteresis-<?php echo $i; ?>"
+                                       value="<?php echo isset($channelsData[$i]["hysteresis"])
+                                           ? $channelsData[$i]["hysteresis"] : ""; ?>"/>
+                            </td>
+                            <td>
+                                <select name="sensor-<?php echo $i; ?>">
+                                    <?php foreach ($sensorOptions as $value => $option): ?>
+                                        <option value="<?php echo $value; ?>"
+                                            <?php echo isset($channelsData[$i]["sensor"]) && $channelsData[$i]["sensor"] == $value
+                                                ? "selected" : ""; ?>><?php echo $option; ?></option>
+                                    <?php endforeach; ?>
+                                </select>
+                            </td>
+                        </tr>
+                    <?php endfor; ?>
+                    <?php if (isset($errors[7])): ?>
+                        <tr>
+                            <td colspan="3" class="errors">
+                                <?php foreach ($errors[7] as $configName => $error): ?>
+                                    <p class="error-box"><?php echo $error; ?></p>
+                                <?php endforeach; ?>
+                            </td>
+                        </tr>
+                    <?php endif; ?>
+                    <tr>
+                        <td>CT4 Freq</td>
+                        <td></td>
+                        <td>
+                            <input type="text" name="hysteresis-7"
+                                   value="<?php echo isset($channelsData[7]["hysteresis"])
+                                        ? $channelsData[7]["hysteresis"] : ""; ?>"/>
                         </td>
                     </tr>
-                <?php endif; ?>
-                <tr>
-                    <td>CT<?php echo $i; ?></td>
-                    <td>
-                        <input type="text" name="multiplier-<?php echo $i; ?>"
-                               value="<?php echo isset($channelsData[$i]["multiplier"])
-                                   ? $channelsData[$i]["multiplier"] : ""; ?>"/>
-                    </td>
-                    <td>
-                        <input type="text" name="hysteresis-<?php echo $i; ?>"
-                               value="<?php echo isset($channelsData[$i]["hysteresis"])
-                                   ? $channelsData[$i]["hysteresis"] : ""; ?>"/>
-                    </td>
-                    <td>
-                        <select name="sensor-<?php echo $i; ?>">
-                            <?php foreach ($sensorOptions as $value => $option): ?>
-                                <option value="<?php echo $value; ?>"
-                                    <?php echo isset($channelsData[$i]["sensor"]) && $channelsData[$i]["sensor"] == $value
-                                        ? "selected" : ""; ?>><?php echo $option; ?></option>
-                            <?php endforeach; ?>
-                        </select>
-                    </td>
-                </tr>
-            <?php endfor; ?>
-            <?php if (isset($errors[7])): ?>
-                <tr>
-                    <td colspan="3" class="errors">
-                        <?php foreach ($errors[7] as $configName => $error): ?>
-                            <p class="error-box"><?php echo $error; ?></p>
-                        <?php endforeach; ?>
-                    </td>
-                </tr>
-            <?php endif; ?>
-            <tr>
-                <td>CT4 Freq</td>
-                <td></td>
-                <td>
-                    <input type="text" name="hysteresis-7"
-                           value="<?php echo isset($channelsData[7]["hysteresis"])
-                                ? $channelsData[7]["hysteresis"] : ""; ?>"/>
-                </td>
-                <td></td>
-            <tr>
-                <td colspan="4">
-                    <button type="submit" class="btn">SAVE</button>
-                </td>
-            </tr>
-        </tbody>
-    </table>
+                </tbody>
+            </table>
+        </div>
+        <div class="row justify-content-center">
+            <button type="submit" class="btn btn-primary m-3">SAVE</button>
+        </div>
+    </div>
 </form>

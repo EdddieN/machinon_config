@@ -116,79 +116,81 @@
 ?>
 
 <form method="POST" class="form-inline">
-    <input type="hidden" name="f" value="din"/>
-    <table class="adc-setup-table">
-        <thead>
-            <tr>
-                <th>Input</th>
-                <th>Mode</th>
-                <th>Invert</th>
-                <th>Periodic Report</th>
-                <th>Multiplier Slope</th>
-                <th>Multiplier Offset</th>
-                <th>Data Type</th>
-            </tr>
-        </thead>
-        <tbody>
-            <?php for ($i = 1; $i <= 16; $i++): ?>
-                <?php if (isset($errors[$i])): ?>
+    <div class="container">
+        <div class="row justify-content-center">
+            <input type="hidden" name="f" value="din"/>
+            <table class="adc-setup-table">
+                <thead>
                     <tr>
-                        <td colspan="5" class="errors">
-                            <?php foreach ($errors[$i] as $configName => $error): ?>
-                                <p class="error-box"><?php echo $configName . " - " . $error; ?></p>
-                            <?php endforeach; ?>
-                        </td>
+                        <th>Input</th>
+                        <th>Mode</th>
+                        <th>Invert</th>
+                        <th>Periodic Report</th>
+                        <th>Multiplier Slope</th>
+                        <th>Multiplier Offset</th>
+                        <th>Data Type</th>
                     </tr>
-                <?php endif; ?>
-                <tr>
-                    <td>DIN<?php echo str_pad($i, 2, "0", STR_PAD_LEFT); ?></td>
-                    <td>
-                        <select name="mode-<?php echo $i; ?>">
-                            <?php foreach ($modeOptions as $value => $option): ?>
-                                <option value="<?php echo $value; ?>"
-                                    <?php echo isset($channelsData[$i]["mode"]) && $channelsData[$i]["mode"] == $value
-                                        ? "selected" : ""; ?>><?php echo $option; ?></option>
-                            <?php endforeach; ?>
-                        </select>
-                    </td>
-                    <td>
-                        <input type="checkbox" name="invert-<?php echo $i ?>" value="1"
-                            <?php echo isset($channelsData[$i]["invert"]) && $channelsData[$i]["invert"] == 1
-                                ? "checked" : ""; ?>/>
-                    </td>
-                    <td>
-                        <input class="form-check-input position-static" type="checkbox"
-                               name="periodic-status-report-<?php echo $i; ?>" value="1"
-                            <?php echo isset($channelsData[$i]["periodic-status-report"]) &&
-                                $channelsData[$i]["periodic-status-report"] == 1
-                                    ? "checked" : ""; ?> />
-                    </td>
-                    <td>
-                        <input type="text" name="multiplier-<?php echo $i; ?>[]"
-                               value="<?php echo isset($channelsData[$i]["multiplier"][0])
-                                   ? $channelsData[$i]["multiplier"][0] : ""; ?>"/>
-                    </td>
-                    <td>
-                        <input type="text" name="multiplier-<?php echo $i; ?>[]"
-                               value="<?php echo isset($channelsData[$i]["multiplier"][1])
-                                   ? $channelsData[$i]["multiplier"][1] : ""; ?>"/>
-                    </td>
-                    <td>
-                        <select name="sensor-<?php echo $i; ?>">
-                            <?php foreach ($sensorOptions as $value => $option): ?>
-                                <option value="<?php echo $value; ?>"
-                                    <?php echo isset($channelsData[$i]["sensor"]) && $channelsData[$i]["sensor"] == $value
-                                        ? "selected" : ""; ?>><?php echo $option; ?></option>
-                            <?php endforeach; ?>
-                        </select>
-                    </td>
-                </tr>
-            <?php endfor; ?>
-            <tr>
-                <td colspan="6">
-                    <button type="submit" class="btn">SAVE</button>
-                </td>
-            </tr>
-        </tbody>
-    </table>
+                </thead>
+                <tbody>
+                    <?php for ($i = 1; $i <= 16; $i++): ?>
+                        <?php if (isset($errors[$i])): ?>
+                            <tr>
+                                <td colspan="5" class="errors">
+                                    <?php foreach ($errors[$i] as $configName => $error): ?>
+                                        <p class="error-box"><?php echo $configName . " - " . $error; ?></p>
+                                    <?php endforeach; ?>
+                                </td>
+                            </tr>
+                        <?php endif; ?>
+                        <tr>
+                            <td>DIN<?php echo str_pad($i, 2, "0", STR_PAD_LEFT); ?></td>
+                            <td>
+                                <select name="mode-<?php echo $i; ?>">
+                                    <?php foreach ($modeOptions as $value => $option): ?>
+                                        <option value="<?php echo $value; ?>"
+                                            <?php echo isset($channelsData[$i]["mode"]) && $channelsData[$i]["mode"] == $value
+                                                ? "selected" : ""; ?>><?php echo $option; ?></option>
+                                    <?php endforeach; ?>
+                                </select>
+                            </td>
+                            <td>
+                                <input type="checkbox" name="invert-<?php echo $i ?>" value="1" data-toggle="toggle"
+                                    <?php echo isset($channelsData[$i]["invert"]) && $channelsData[$i]["invert"] == 1
+                                        ? "checked" : ""; ?>/>
+                            </td>
+                            <td>
+                                <input class="form-check-input position-static" type="checkbox" data-toggle="toggle"
+                                       name="periodic_status_report-<?php echo $i; ?>" value="1"
+                                    <?php echo isset($channelsData[$i]["periodic_status_report"]) &&
+                                        $channelsData[$i]["periodic_status_report"] == 1
+                                            ? "checked" : ""; ?> />
+                            </td>
+                            <td>
+                                <input type="text" name="multiplier-<?php echo $i; ?>[]"
+                                       value="<?php echo isset($channelsData[$i]["multiplier"][0])
+                                           ? $channelsData[$i]["multiplier"][0] : ""; ?>"/>
+                            </td>
+                            <td>
+                                <input type="text" name="multiplier-<?php echo $i; ?>[]"
+                                       value="<?php echo isset($channelsData[$i]["multiplier"][1])
+                                           ? $channelsData[$i]["multiplier"][1] : ""; ?>"/>
+                            </td>
+                            <td>
+                                <select name="sensor-<?php echo $i; ?>">
+                                    <?php foreach ($sensorOptions as $value => $option): ?>
+                                        <option value="<?php echo $value; ?>"
+                                            <?php echo isset($channelsData[$i]["sensor"]) && $channelsData[$i]["sensor"] == $value
+                                                ? "selected" : ""; ?>><?php echo $option; ?></option>
+                                    <?php endforeach; ?>
+                                </select>
+                            </td>
+                        </tr>
+                    <?php endfor; ?>
+                </tbody>
+            </table>
+        </div>
+        <div class="row justify-content-center">
+            <button type="submit" class="btn btn-primary m-3">SAVE</button>
+        </div>
+    </div>
 </form>

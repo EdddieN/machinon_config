@@ -1,44 +1,9 @@
-.adc-setup-table tbody tr:last-child {
-    text-align: right;
+body {
+    padding-top: 40px;
+    padding-bottom: 40px;
+    background-color: #eee;
 }
-.adc-setup-table th {
-    text-align: left;
-}
-.adc-setup-table td,
-.adc-setup-table th {
-    padding: 10px;   
-}
-.adc-setup-table .errors {
-    text-align: center;
-    background-color: #DB4437;
-    color: white;
-}
-.adc-setup-table .error-box {
-    margin: 0.5em;
-}
-.adc-setup-table select, 
-.adc-setup-table input {
-    height: 30px;
-    background: none;
-    font-size: 14px;
-    padding: 0px 10px;
-    box-sizing: content-box;
-    border: 1px solid black;
-}
-.adc-setup-table .btn {
-    font-size: 14px;
-    background-color: #4285F4;
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    font-weight: bold;
-    cursor: pointer;
-}
-.adc-setup-table .link-btn {
-    text-transform: uppercase;
-    text-decoration: none;
-    font-family: "Arial";
-}
+
 .top-menu > a {
     box-sizing: border-box;
     color: black;
@@ -65,4 +30,71 @@
 }
 .top-menu > a.active-purple {
     border-bottom: 2px solid #B84BE1;
+}
+
+.form-signin {
+    max-width: 330px;
+    padding: 15px;
+    margin: 0 auto;
+}
+.form-signin .form-signin-heading,
+.form-signin .checkbox {
+    margin-bottom: 10px;
+}
+.form-signin .checkbox {
+    font-weight: normal;
+}
+.form-signin .form-control {
+    position: relative;
+    height: auto;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    padding: 10px;
+    font-size: 16px;
+}
+.form-signin .form-control:focus {
+    z-index: 2;
+}
+.form-signin input[type="email"] {
+    margin-bottom: -1px;
+    border-bottom-right-radius: 0;
+    border-bottom-left-radius: 0;
+}
+.form-signin input[type="password"] {
+    margin-bottom: 10px;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+}
+
+/* Bootstrap Toggle v2.2.2 corrections for Bootsrtap 4*/
+.toggle-off {
+    box-shadow: inset 0 3px 5px rgba(0, 0, 0, .125);
+}
+.toggle.off {
+    border-color: rgba(0, 0, 0, .25);
+}
+
+.toggle-handle {
+    background-color: white;
+    border: thin rgba(0, 0, 0, .25) solid;
+}
+th {
+    padding:0px 10px;
+}
+select,
+input:not([type="checkbox"]) {
+    height:34px;
+    border: 1px solid rgba(0, 0, 0, .25);
+    margin:2px 6px;
+    cursor:pointer;
+    border-radius: .25rem;
+}
+input[type="text"] {
+    padding:0px 10px;
+}
+.toggle {
+    margin: 2px 6px;
+    width: 50px!important;
+    height:30px!important;
 }

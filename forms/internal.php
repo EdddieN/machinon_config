@@ -105,72 +105,84 @@
 
 ?>
 <form method="POST" class="form-inline">
-    <input type="hidden" name="f" value="internal"/>
-    <table class="adc-setup-table">
-        <thead>
-            <tr>
-                <th>Parameter</th>
-                <th>Value</th>
-            </tr>
-        </thead>
-        <tbody>
-            <?php if (isset($errors[1]["interval"])): ?>
-                <tr>
-                    <td colspan="2" class="errors">
-                        <?php foreach ($errors[1] as $configName => $error): ?>
-                            <p class="error-box"><?php echo $error; ?></p>
-                        <?php endforeach; ?>
-                    </td>
-                </tr>
-            <?php endif; ?>
-            <tr>
-                <td>Report Interval<br>(10-86400 secs)</td>
-                <td>
-                    <input type="text" name="interval-1" value="<?php echo isset($channelsData[1]["interval"]) ? $channelsData[1]["interval"] : ""; ?>"/>
-                </td>
-            </tr>
-            <?php if (isset($errors[15]["vsupply_hyst"])): ?>
-                <tr>
-                    <td colspan="2" class="errors">
-                        <?php foreach ($errors[15] as $configName => $error): ?>
-                            <p class="error-box"><?php echo $error; ?></p>
-                        <?php endforeach; ?>
-                    </td>
-                </tr>
-            <?php endif; ?>
-            <tr>
-                <td>Vsupply Report Hysteresis<br>(0 to use interval)</td>
-                <td>
-                    <input type="text" name="vsupply_hyst-15" value="<?php echo isset($channelsData[15]["vsupply_hyst"]) ? $channelsData[15]["vsupply_hyst"] : ""; ?>"/>
-                </td>
-            </tr>
-            <tr>
-                <td>Keypad Events Port</td>
-                <td>
-                    <select name="keypadmode-11">
-                        <?php foreach ($keypadModeOptions as $value => $option): ?>
-                            <option value="<?php echo $value; ?>" <?php echo isset($channelsData[11]["keypadmode"]) && $channelsData[11]["keypadmode"] == $value ? "selected" : ""; ?>><?php echo $option; ?></option>
-                        <?php endforeach; ?>
-                    </select>
-                </td>
-            </tr>
-            <tr>
-                <td>Backlight Power-up State</td>
-                <td>
-                    <select name="backlight_default-18">
-                        <?php foreach ($stateOptions as $value => $option): ?>
-                            <option value="<?php echo $value; ?>" <?php echo isset($channelsData[18]["backlight_default"]) && $channelsData[18]["backlight_default"] == $value ? "selected" : ""; ?>><?php echo $option; ?></option>
-                        <?php endforeach; ?>
-                    </select>
-                </td>
-            </tr>
-            <tr>
-                <td colspan="2">
-                    <button type="submit" class="btn">SAVE</button>
-                </td>
-            </tr>
-        </tbody>
-    </table>
+    <div class="container">
+        <div class="row justify-content-center">
+            <input type="hidden" name="f" value="internal"/>
+            <table class="adc-setup-table">
+                <thead>
+                    <tr>
+                        <th>Parameter</th>
+                        <th>Value</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php if (isset($errors[1]["interval"])): ?>
+                        <tr>
+                            <td colspan="2" class="errors">
+                                <?php foreach ($errors[1] as $configName => $error): ?>
+                                    <p class="error-box"><?php echo $error; ?></p>
+                                <?php endforeach; ?>
+                            </td>
+                        </tr>
+                    <?php endif; ?>
+                    <tr>
+                        <td>Report Interval</td>
+                        <td>
+                            <input type="text" name="interval-1" value="<?php echo isset($channelsData[1]["interval"]) ? $channelsData[1]["interval"] : ""; ?>"/>
+                        </td>
+                        <td>(10-86400 secs)</td>
+                    </tr>
+                    <?php if (isset($errors[15]["vsupply_hyst"])): ?>
+                        <tr>
+                            <td colspan="2" class="errors">
+                                <?php foreach ($errors[15] as $configName => $error): ?>
+                                    <p class="error-box"><?php echo $error; ?></p>
+                                <?php endforeach; ?>
+                            </td>
+                        </tr>
+                    <?php endif; ?>
+                    <tr>
+                        <td>Vsupply Report Hysteresis</td>
+                        <td>
+                            <input type="text" name="vsupply_hyst-15" value="<?php echo isset($channelsData[15]["vsupply_hyst"]) ? $channelsData[15]["vsupply_hyst"] : ""; ?>"/>
+                        </td>
+                        <td>(0 to use interval)</td>
+                    </tr>
+                    <tr>
+                        <td>Keypad Events Port</td>
+                        <td>
+                            <select name="keypadmode-11">
+                                <?php foreach ($keypadModeOptions as $value => $option): ?>
+                                    <option value="<?php echo $value; ?>" <?php echo isset($channelsData[11]["keypadmode"]) && $channelsData[11]["keypadmode"] == $value ? "selected" : ""; ?>><?php echo $option; ?></option>
+                                <?php endforeach; ?>
+                            </select>
+                        </td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>Backlight Power-up State</td>
+                        <td>
+                            <select name="backlight_default-18">
+                                <?php foreach ($stateOptions as $value => $option): ?>
+                                    <option value="<?php echo $value; ?>" <?php echo isset($channelsData[18]["backlight_default"]) && $channelsData[18]["backlight_default"] == $value ? "selected" : ""; ?>><?php echo $option; ?></option>
+                                <?php endforeach; ?>
+                            </select>
+                        </td>
+                        <td></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="row justify-content-center">
+            <button type="submit" class="btn btn-primary m-3">SAVE</button>
+        </div>
+        <div class="row justify-content-center">
+            <p>Firmware Version : <samp><?php echo isset($channelsData[1]["firmware"]) ? $channelsData[1]["firmware"] : "(unknown)"; ?></samp></p>
+        </div>
+        <div class="row justify-content-center">
+            <p>PCB Serial Number : <samp><?php echo isset($channelsData[1]["pcbserial"]) ? $channelsData[1]["pcbserial"] : "(unknown)"; ?></samp></p>
+        </div>
+    </div>
 </form>
-<p>Firmware Version: <samp><?php echo isset($channelsData[1]["firmware"]) ? $channelsData[1]["firmware"] : "(unknown)"; ?></samp></p>
-<p>PCB Serial Number: <samp><?php echo isset($channelsData[1]["pcbserial"]) ? $channelsData[1]["pcbserial"] : "(unknown)"; ?></samp></p>
+
