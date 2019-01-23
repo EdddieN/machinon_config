@@ -55,6 +55,10 @@
 			{
 				$channelsData[$i]["invert"] = 0;
 			}
+			if (empty($channelsData[$i]["periodic_status_report"]))
+			{
+				$channelsData[$i]["periodic_status_report"] = 0;
+			}
 		}
 		
 		if (empty($errors)) {

@@ -1,8 +1,8 @@
 <?php
 require_once __DIR__ . '/PhpSerial.php';
+require_once __DIR__ . '/QueryManager.php';
 
-const MACHINON_SERIAL_PORT = '/dev/ttyAMA0';
-//const MACHINON_SERIAL_PORT = '/dev/ttySC1';
+const MACHINON_SERIAL_PORT = '/dev/ttySC1';
 
 function microtime_float()
 {
@@ -91,7 +91,7 @@ class MachinonSerial
 				// DINxx_status
 				// type 24 = status report enable
 				// type 25 = status input invert
-				// type 26 = status input periodic_status_report
+				// type 26 = status input periodic status report
 				for ($child = 1; $child <= 16; $child++)
 				{
 					foreach ([24, 25, 26] as $msgType)
@@ -206,9 +206,12 @@ class MachinonSerial
 	{
 		foreach ($messageArray as $message)
 		{
-			// send the pre-coded string. Wait for the response but ignore it
+			// send the pre-coded string. Wait for the response (if using ACK) but ignore it
 			$this->sendString($message . "\n");
-//			$dummy = $this->readString();
+            if (QueryManager::QUERY_USE_ACK == 1)
+            {
+                $dummy = $this->readString();
+            }
 		}
 	}
 }
