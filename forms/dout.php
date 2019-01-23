@@ -25,6 +25,15 @@
 			}
 			$channelsData[$channel][$data[0]] = $value;
 		}
+
+		// add data for any missing checkboxes (unchecked checkboxes are not included in the POST)
+		for ($i = 1; $i <= 16; $i++)
+		{
+			if (empty($channelsData[$i]["periodic_status_report"]))
+			{
+				$channelsData[$i]["periodic_status_report"] = 0;
+			}
+		}
 		
 		if (empty($errors)) {
 			$queries = [];
@@ -104,9 +113,9 @@
                     </td>
                     <td>
                         <input class="form-check-input position-static" type="checkbox"
-                               name="periodic-status-report-<?php echo $i; ?>" value="1"
-                            <?php echo isset($channelsData[$i]["periodic-status-report"])
-                                && $channelsData[$i]["periodic-status-report"] == 1
+                               name="periodic_status_report-<?php echo $i; ?>" value="1"
+                            <?php echo isset($channelsData[$i]["periodic_status_report"])
+                                && $channelsData[$i]["periodic_status_report"] == 1
                                     ? "checked" : ""; ?> />
                     </td>
                 </tr>

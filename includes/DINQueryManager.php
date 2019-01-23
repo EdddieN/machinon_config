@@ -13,7 +13,7 @@ class DINQueryManager implements QueryManager {
         "multiplier" => 25,
         "sensor" => 26,
 		"invert" => 25,
-        "periodic-status-report" => 26,
+        "periodic_status_report" => 26,
     ];
 
     /**
@@ -50,9 +50,10 @@ class DINQueryManager implements QueryManager {
                                 break;
                         }
                         break;
-                    case "periodic-status-report":
+                    case "periodic_status_report":
                         $queries[1][] = "1;{$channelId};" . self::QUERY_TYPE_WRITE . ";" . self::QUERY_USE_ACK . ";" . static::$configList[$type] . ";{$value}";
                         break;
+                    case "sensor":
                     default:
                         $queries[2][] = "2;{$channelId};" . self::QUERY_TYPE_WRITE . ";" . self::QUERY_USE_ACK . ";" . static::$configList[$type] . ";{$value}";
                         break;
@@ -108,6 +109,26 @@ class DINQueryManager implements QueryManager {
                         if ($queryParts[5] == 1) {
                             $data[$queryParts[1]][$configName] += 1 << ($queryParts[0] - 1);
                         }
+                        break;
+					case "sensor":
+                    case "periodic_status_report":
+                        // extract sensor type if this is node 2 (counters)
+						if ($queryParts[0] == 2)
+						{
+							/*
+                            $value = explode(",", $queryParts[5]);
+							if (count($value) < 2) {
+								continue 2;
+							}
+							$data[$queryParts[1]]["sensor"] = [ $value[0], $value[1] ];
+                            */
+                            $data[$queryParts[1]]["sensor"] = $queryParts[5];
+						}
+                        // periodic_status_report if it's node 1 (status inputs) (node 2 uses same message type)
+						if ($queryParts[0] == 1)
+						{
+							$data[$queryParts[1]]["periodic_status_report"] = $queryParts[5];
+						}
                         break;
                     default:
                         $data[$queryParts[1]][$configName] = $queryParts[5];

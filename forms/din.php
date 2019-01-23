@@ -55,6 +55,10 @@
 			{
 				$channelsData[$i]["invert"] = 0;
 			}
+			if (empty($channelsData[$i]["periodic_status_report"]))
+			{
+				$channelsData[$i]["periodic_status_report"] = 0;
+			}
 		}
 		
 		if (empty($errors)) {
@@ -158,9 +162,9 @@
                     </td>
                     <td>
                         <input class="form-check-input position-static" type="checkbox"
-                               name="periodic-status-report-<?php echo $i; ?>" value="1"
-                            <?php echo isset($channelsData[$i]["periodic-status-report"]) &&
-                                $channelsData[$i]["periodic-status-report"] == 1
+                               name="periodic_status_report-<?php echo $i; ?>" value="1"
+                            <?php echo isset($channelsData[$i]["periodic_status_report"]) &&
+                                $channelsData[$i]["periodic_status_report"] == 1
                                     ? "checked" : ""; ?> />
                     </td>
                     <td>
