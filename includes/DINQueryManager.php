@@ -1,7 +1,5 @@
 <?php
 
-require_once __DIR__ . '/QueryManager.php';
-
 class DINQueryManager implements QueryManager {
 
     const MODE_DISABLE = 0;

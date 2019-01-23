@@ -1,7 +1,5 @@
 <?php
 
-require_once __DIR__ . '/QueryManager.php';
-
 class CTQueryManager implements QueryManager {
 
     private static $configList = [

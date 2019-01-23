@@ -1,7 +1,5 @@
 <?php
 
-require_once __DIR__ . '/QueryManager.php';
-
 class InternalQueryManager implements QueryManager {
 
     const KEYPAD_MODE_DISABLE = 0;

@@ -1,7 +1,5 @@
 <?php
 
-require_once __DIR__ . '/QueryManager.php';
-
 class ADCQueryManager implements QueryManager {
 
     private static $configList = [

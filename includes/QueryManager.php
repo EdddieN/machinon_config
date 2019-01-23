@@ -9,5 +9,4 @@ interface QueryManager {
 
     public static function generateSetQueriesForChannel($nodeId, $channelId, $data);
     public static function readQueriesForChannel($queries);
-
 }
