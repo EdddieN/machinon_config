@@ -4,6 +4,7 @@
     // Probably not the best way, but quickest.
     // Script expects a 'f' URL parameter with the name of the form,
     // then, after ensuring the parameter is valid, calls the form php
+    session_start();
 
     require_once __DIR__ . '/../includes/machinonSerial.php';
 
@@ -17,6 +18,8 @@
 
     if (empty($_REQUEST['f']) || !key_exists(strtolower($_REQUEST['f']), $valid_forms)) {
         $form = null;
+        $link = null;
+        $title = null;
     } else {
         $form = strtolower($_REQUEST['f']);
         list($link, $title) = explode('|', $valid_forms[$form]);
@@ -37,16 +40,38 @@
     <div class="container text-center">
         <div class="row">
             <div class="col-sm-12 text-center">
-                <p><img src="images/logomachinon.png" alt="Machinon" /></p>
+                <p><img src="images/machinon_logo.png" alt="Machinon"  style="width:175px"/></p>
             </div>
         </div>
-        <?php if (!$form) : ?>
         <hr/>
+        <?php if (false && !isset($_SESSION['credentials'])) : ?>
+            <div class="row">
+                <div class="col-sm-4"></div>
+                <div class="col-sm-4">
+                    <form class="form-group form-signin" method="POST">
+                        <div class="alert alert-danger" role="alert" style="display:none">Login error</div>
+                        <div class="alert alert-success" role="alert" style="display:none">Login complete, please wait...</div>
+                        <h2 class="form-signin-heading">Please Login</h2>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="basic-addon1">@</span>
+                            </div>
+                            <input type="text" name="username" class="form-control" placeholder="Username" required>
+                        </div>
+                        <label for="inputPassword" class="sr-only">Password</label>
+                        <input type="password" name="password" id="inputPassword" class="form-control" placeholder="Password" required>
+                        <button class="btn btn-lg btn-primary btn-block" type="submit">Login</button>
+                    </form>
+                </div>
+                <div class="col-sm-4"></div>
+            </div>
+        <?php elseif (!$form) : ?>
         <div class="row">
             <div class="col-sm-4"></div>
             <div class="col-sm-4">
                 <a class="btn btn-lg btn-primary btn-block" href="machinon/">Domoticz</a>
                 <a class="btn btn-lg btn-primary btn-block" href="?f=main">Machinon setup</a>
+                <a class="btn btn-lg btn-primary btn-block" href="logout.php">Logout</a>
             </div>
             <div class="col-sm-4"></div>
         </div>
@@ -68,7 +93,7 @@
             </div>
         </div>
         <div class="row m-auto justify-content-center">
-            <div class="col-md-12">
+            <div class="form-config col-md-12">
                 <?php require_once __DIR__ . '/../forms/' . $form . '.php'; ?>
             </div>
         </div>
